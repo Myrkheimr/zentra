@@ -1,0 +1,45 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  language:
+    strict-casts: true
+    strict-inference: true
+    strict-raw-types: true
+
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.mapper.dart"
+    - "**/*.gr.dart"
+    - "**/*.config.dart"
+
+linter:
+  rules:
+    # Recommended core rules
+    always_use_package_imports: true
+    avoid_print: true
+    prefer_const_constructors: true
+    prefer_final_fields: true
+    avoid_returning_null_for_future: true
+    use_super_parameters: true
+    unnecessary_late: true
+
+    # Flutter-specific UX polish
+    avoid_unnecessary_containers: true
+    sized_box_for_whitespace: true
+    prefer_const_literals_to_create_immutables: true
+    use_key_in_widget_constructors: true
+
+    # BLoC & routing/codegen related
+    public_member_api_docs: false # feel free to enable for API/SDK
+    sort_constructors_first: true
+    require_trailing_commas: true
+    avoid_positional_boolean_parameters: true
+    type_annotate_public_apis: true
+
+    # Optional: style tightening
+    lines_longer_than_80_chars: false
+    always_declare_return_types: true
+    prefer_expression_function_bodies: false
+
+    # For localized apps
+    avoid_escaping_inner_quotes: true
