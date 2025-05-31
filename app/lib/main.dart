@@ -1,20 +1,23 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:zentra/lib/core/core.dart';
 
 void main() {
-  runApp(const MainApp());
+  initLogging();
+
+  if (kDebugMode) {
+    Bloc.observer = ZentraBlocObserver();
+  }
+
+  configureDependencies();
+
+  runApp(_setupGlobalBlocProviders(const ZentraApp()));
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
-  }
+Widget _setupGlobalBlocProviders(Widget child) {
+  return MultiBlocProvider(
+    providers: [BlocProvider(create: (_) => getIt<AppBloc>())],
+    child: child,
+  );
 }
