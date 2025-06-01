@@ -14,6 +14,7 @@ class AppEventMapper extends ClassMapperBase<AppEvent> {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = AppEventMapper._());
       AppStartedMapper.ensureInitialized();
+      AppFirstLaunchStatusChangedMapper.ensureInitialized();
     }
     return _instance!;
   }
@@ -158,6 +159,134 @@ class _AppStartedCopyWithImpl<$R, $Out>
       _AppStartedCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }
 
+class AppFirstLaunchStatusChangedMapper
+    extends SubClassMapperBase<AppFirstLaunchStatusChanged> {
+  AppFirstLaunchStatusChangedMapper._();
+
+  static AppFirstLaunchStatusChangedMapper? _instance;
+  static AppFirstLaunchStatusChangedMapper ensureInitialized() {
+    if (_instance == null) {
+      MapperContainer.globals
+          .use(_instance = AppFirstLaunchStatusChangedMapper._());
+      AppEventMapper.ensureInitialized().addSubMapper(_instance!);
+    }
+    return _instance!;
+  }
+
+  @override
+  final String id = 'AppFirstLaunchStatusChanged';
+
+  static bool _$status(AppFirstLaunchStatusChanged v) => v.status;
+  static const Field<AppFirstLaunchStatusChanged, bool> _f$status =
+      Field('status', _$status);
+
+  @override
+  final MappableFields<AppFirstLaunchStatusChanged> fields = const {
+    #status: _f$status,
+  };
+
+  @override
+  final String discriminatorKey = 'event';
+  @override
+  final dynamic discriminatorValue = 'first_launch_status_changed';
+  @override
+  late final ClassMapperBase superMapper = AppEventMapper.ensureInitialized();
+
+  static AppFirstLaunchStatusChanged _instantiate(DecodingData data) {
+    return AppFirstLaunchStatusChanged(status: data.dec(_f$status));
+  }
+
+  @override
+  final Function instantiate = _instantiate;
+
+  static AppFirstLaunchStatusChanged fromMap(Map<String, dynamic> map) {
+    return ensureInitialized().decodeMap<AppFirstLaunchStatusChanged>(map);
+  }
+
+  static AppFirstLaunchStatusChanged fromJson(String json) {
+    return ensureInitialized().decodeJson<AppFirstLaunchStatusChanged>(json);
+  }
+}
+
+mixin AppFirstLaunchStatusChangedMappable {
+  String toJson() {
+    return AppFirstLaunchStatusChangedMapper.ensureInitialized()
+        .encodeJson<AppFirstLaunchStatusChanged>(
+            this as AppFirstLaunchStatusChanged);
+  }
+
+  Map<String, dynamic> toMap() {
+    return AppFirstLaunchStatusChangedMapper.ensureInitialized()
+        .encodeMap<AppFirstLaunchStatusChanged>(
+            this as AppFirstLaunchStatusChanged);
+  }
+
+  AppFirstLaunchStatusChangedCopyWith<AppFirstLaunchStatusChanged,
+          AppFirstLaunchStatusChanged, AppFirstLaunchStatusChanged>
+      get copyWith => _AppFirstLaunchStatusChangedCopyWithImpl<
+              AppFirstLaunchStatusChanged, AppFirstLaunchStatusChanged>(
+          this as AppFirstLaunchStatusChanged, $identity, $identity);
+  @override
+  String toString() {
+    return AppFirstLaunchStatusChangedMapper.ensureInitialized()
+        .stringifyValue(this as AppFirstLaunchStatusChanged);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return AppFirstLaunchStatusChangedMapper.ensureInitialized()
+        .equalsValue(this as AppFirstLaunchStatusChanged, other);
+  }
+
+  @override
+  int get hashCode {
+    return AppFirstLaunchStatusChangedMapper.ensureInitialized()
+        .hashValue(this as AppFirstLaunchStatusChanged);
+  }
+}
+
+extension AppFirstLaunchStatusChangedValueCopy<$R, $Out>
+    on ObjectCopyWith<$R, AppFirstLaunchStatusChanged, $Out> {
+  AppFirstLaunchStatusChangedCopyWith<$R, AppFirstLaunchStatusChanged, $Out>
+      get $asAppFirstLaunchStatusChanged => $base.as((v, t, t2) =>
+          _AppFirstLaunchStatusChangedCopyWithImpl<$R, $Out>(v, t, t2));
+}
+
+abstract class AppFirstLaunchStatusChangedCopyWith<
+    $R,
+    $In extends AppFirstLaunchStatusChanged,
+    $Out> implements AppEventCopyWith<$R, $In, $Out> {
+  @override
+  $R call({bool? status});
+  AppFirstLaunchStatusChangedCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
+      Then<$Out2, $R2> t);
+}
+
+class _AppFirstLaunchStatusChangedCopyWithImpl<$R, $Out>
+    extends ClassCopyWithBase<$R, AppFirstLaunchStatusChanged, $Out>
+    implements
+        AppFirstLaunchStatusChangedCopyWith<$R, AppFirstLaunchStatusChanged,
+            $Out> {
+  _AppFirstLaunchStatusChangedCopyWithImpl(
+      super.value, super.then, super.then2);
+
+  @override
+  late final ClassMapperBase<AppFirstLaunchStatusChanged> $mapper =
+      AppFirstLaunchStatusChangedMapper.ensureInitialized();
+  @override
+  $R call({bool? status}) =>
+      $apply(FieldCopyWithData({if (status != null) #status: status}));
+  @override
+  AppFirstLaunchStatusChanged $make(CopyWithData data) =>
+      AppFirstLaunchStatusChanged(status: data.get(#status, or: $value.status));
+
+  @override
+  AppFirstLaunchStatusChangedCopyWith<$R2, AppFirstLaunchStatusChanged, $Out2>
+      $chain<$R2, $Out2>(Then<$Out2, $R2> t) =>
+          _AppFirstLaunchStatusChangedCopyWithImpl<$R2, $Out2>(
+              $value, $cast, t);
+}
+
 class AppStateMapper extends ClassMapperBase<AppState> {
   AppStateMapper._();
 
@@ -176,14 +305,19 @@ class AppStateMapper extends ClassMapperBase<AppState> {
   static AppStatus _$status(AppState v) => v.status;
   static const Field<AppState, AppStatus> _f$status =
       Field('status', _$status, opt: true, def: AppStatus.initial);
+  static bool _$isFirstLaunch(AppState v) => v.isFirstLaunch;
+  static const Field<AppState, bool> _f$isFirstLaunch =
+      Field('isFirstLaunch', _$isFirstLaunch, opt: true, def: true);
 
   @override
   final MappableFields<AppState> fields = const {
     #status: _f$status,
+    #isFirstLaunch: _f$isFirstLaunch,
   };
 
   static AppState _instantiate(DecodingData data) {
-    return AppState(status: data.dec(_f$status));
+    return AppState(
+        status: data.dec(_f$status), isFirstLaunch: data.dec(_f$isFirstLaunch));
   }
 
   @override
@@ -236,7 +370,7 @@ extension AppStateValueCopy<$R, $Out> on ObjectCopyWith<$R, AppState, $Out> {
 
 abstract class AppStateCopyWith<$R, $In extends AppState, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
-  $R call({AppStatus? status});
+  $R call({AppStatus? status, bool? isFirstLaunch});
   AppStateCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -249,11 +383,15 @@ class _AppStateCopyWithImpl<$R, $Out>
   late final ClassMapperBase<AppState> $mapper =
       AppStateMapper.ensureInitialized();
   @override
-  $R call({AppStatus? status}) =>
-      $apply(FieldCopyWithData({if (status != null) #status: status}));
+  $R call({AppStatus? status, bool? isFirstLaunch}) =>
+      $apply(FieldCopyWithData({
+        if (status != null) #status: status,
+        if (isFirstLaunch != null) #isFirstLaunch: isFirstLaunch
+      }));
   @override
-  AppState $make(CopyWithData data) =>
-      AppState(status: data.get(#status, or: $value.status));
+  AppState $make(CopyWithData data) => AppState(
+      status: data.get(#status, or: $value.status),
+      isFirstLaunch: data.get(#isFirstLaunch, or: $value.isFirstLaunch));
 
   @override
   AppStateCopyWith<$R2, AppState, $Out2> $chain<$R2, $Out2>(

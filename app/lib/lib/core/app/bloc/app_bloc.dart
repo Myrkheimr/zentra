@@ -11,14 +11,24 @@ part 'app_state.dart';
 final class AppBloc extends Bloc<AppEvent, AppState> {
   AppBloc() : super(const AppState()) {
     on<AppStarted>(_onAppStarted);
+    on<AppFirstLaunchStatusChanged>(_onAppFirstLaunchStatusChanged);
   }
 
   void _onAppStarted(AppStarted event, Emitter<AppState> emit) async {
     emit(state.copyWith(status: AppStatus.loading));
 
+    // TODO: Update isFirstLaunch to false once onboarding is complete
+    // It is left as it is just for testing purposes
     await Future.delayed(const Duration(seconds: 2), () {
       emit(state.copyWith(status: AppStatus.loaded));
     });
+  }
+
+  void _onAppFirstLaunchStatusChanged(
+    AppFirstLaunchStatusChanged event,
+    Emitter<AppState> emit,
+  ) async {
+    emit(state.copyWith(isFirstLaunch: event.status));
   }
 
   @disposeMethod

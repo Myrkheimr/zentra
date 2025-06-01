@@ -12,6 +12,7 @@
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:zentra/lib/core/app/bloc/app_bloc.dart' as _i120;
+import 'package:zentra/lib/core/router/router.dart' as _i538;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -24,6 +25,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i120.AppBloc(),
       dispose: (i) => i.close(),
     );
+    gh.singleton<_i538.AppRouter>(() => _i538.AppRouter());
     return this;
   }
 }
